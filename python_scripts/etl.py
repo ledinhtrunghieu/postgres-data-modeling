@@ -6,7 +6,22 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
-    
+    """Open and insert data from song file to postgres
+        
+    Args:
+        cur: psycopg2 cursor
+        filepath: path of the file
+        
+    Returns:
+        None
+        
+        
+    Raises:
+        None
+
+    Notes:
+        Thanks reviewer for helping me learn how to write docstrings (Google Styles here).
+    """
     # open song file
     df = pd.read_json(filepath, lines=True)
     df['duration'] = int(df['duration'])
@@ -25,6 +40,18 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
+    """Open and insert data from log file to postgres
+    
+    Args:
+        cur: psycopg2 cursor
+        filepath: path of log file
+        
+    Returns:
+        None
+    
+    Raises:
+        None
+    """
     # open log file
     df = pd.read_json(filepath, lines=True)
 
@@ -68,6 +95,20 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
+    """Open and insert all data from filepath directory
+    
+    Args:
+        cur: psycopg2 cursor
+        conn: psycopg2 connection
+        filepath: filepath directory
+        func: function for file processing
+        
+    Returns:
+        None
+    
+    Raises:
+        None
+    """
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -87,6 +128,17 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
+    """Main Script
+    
+    Args:
+        None
+        
+    Returns:
+        None
+    
+    Raises:
+        None
+    """
     conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
 
